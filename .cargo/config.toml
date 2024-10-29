@@ -1,0 +1,28 @@
+runner = "picotool load -u -v -x -t elf"
+
+[unstable]
+build-std = ["core"]
+
+[target.riscv32imac-unknown-none-elf]
+rustflags = [
+  "-C", "linker=flip-link",
+  "-C", "link-arg=--nmagic",
+  "-C", "link-arg=-Trp235x_riscv.x",
+  "-C", "link-arg=-Tdefmt.x",
+  "-C", "target-feature=+zicsr",
+  "-C", "target-feature=+zifencei",
+  "-C", "target-feature=+zcb",
+  "-C", "target-feature=+zcmp",
+  "-C", "target-feature=+zba",
+  "-C", "target-feature=+zbb",
+  "-C", "target-feature=+zbkb",
+  "-C", "target-feature=+zbs",
+  "-Z", "trap-unreachable=no",
+  "-C", "no-vectorize-loops",
+]
+
+[build]
+target = "riscv32imac-unknown-none-elf"
+
+[env]
+DEFMT_LOG = "debug"
